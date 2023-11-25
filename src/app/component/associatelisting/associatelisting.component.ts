@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../Material.module';
 import { MatDialog } from '@angular/material/dialog';
 import { AddassociateComponent } from '../addassociate/addassociate.component';
+import { Store } from '@ngrx/store';
+import { Associates } from '../../Store/Model/Associate.model';
+import { getassociatelist } from '../../Store/Associate/Associate.Selector';
 
 @Component({
   selector: 'app-associatelisting',
@@ -13,9 +16,13 @@ import { AddassociateComponent } from '../addassociate/addassociate.component';
 })
 export class AssociatelistingComponent implements OnInit {
   
-  constructor(private dialog:MatDialog){}
+
+  AssociateList!:Associates[];
+  constructor(private dialog:MatDialog,private store:Store){}
   ngOnInit(): void {
-    
+    this.store.select(getassociatelist).subscribe(item =>{
+      this.AssociateList = item
+    })
   }
 
   functionAdd(){
